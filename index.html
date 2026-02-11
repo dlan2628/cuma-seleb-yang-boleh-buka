@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADALAH POKONYA</title>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom, #ffafcc, #ffc8dd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= HATI ================= */
+
+#hearts{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.heart{
+  position: absolute;
+  top: -20px;
+  font-size: 20px;
+  animation: fall linear forwards;
+  opacity: 0.9;
+}
+
+@keyframes fall{
+  to{
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  height: 100vh;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  margin: 0;
+}
+
+/* ================= AMPLOP ================= */
+
+.envelope {
+  width: 260px;
+  height: 180px;
+  background: white;
+  margin:40px auto;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #ff8fab;
+  box-shadow: 0 10px 20px rgba(0,0,0,.25);
+  cursor: pointer;
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 60%;
+  background: #ff8fab;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 1.8s ease;
+  backface-visibility: hidden;
+  z-index: 3;
+}
+
+.seal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ff5d8f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 4;
+  color: white;
+}
+
+/* FOTO */
+#photo {
+  width:120px;
+  height:95px;
+  object-fit: cover;
+  border-radius:12px;
+  position:absolute;
+  left:50%;
+  bottom:-140px;
+  transform:translateX(-50%) scale(0.9);
+  opacity:0;
+  transition: all 1.8s ease;
+  z-index:1;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+/* TULISAN DI ATAS FOTO */
+.photo-text{
+  .photo-text{
+  position:absolute;
+  left:50%;
+  bottom:-180px;
+  transform:translateX(-50%);
+  
+  width:80%;              
+  max-width:200px;        
+  
+  background: rgba(255,255,255,0.95);
+  padding:6px 10px;
+  border-radius:14px;
+  
+  font-size:12px;        
+  font-weight:bold;
+  text-align:center;     
+  word-wrap:break-word;   
+  
+  color:#ff2e75;
+  text-shadow:0 0 6px rgba(255,105,180,0.6);
+  
+  opacity:0;
+  transition: all 1.8s ease;
+  z-index:2;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+}
+
+/* SAAT DIBUKA */
+.envelope.open .flap {
+  transform: rotateX(180deg);
+}
+
+.envelope.open #photo {
+  bottom:30px;
+  opacity:1;
+  transform:translateX(-50%) scale(1.05);
+}
+
+.envelope.open .photo-text{
+  bottom:160px;
+  opacity:1;
+}
+
+.envelope.open .seal{
+  opacity: 0;
+  transform: translate(-50%, -80%) scale(0.5);
+  transition: all 0.8s ease;
+  pointer-events: none;
+}
+
+/* ================= TOMBOL ================= */
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #ff5d8f;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.text-box {
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  max-width: 260px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<div class="container">
+  <h1>💖METT VALENTINE💖</h1>
+
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="seal">🌸</div>
+
+    <img src="images/foto_1.jpg.jpg" id="photo">
+    <div class="photo-text">AWASSS ADA SELEBB NII</div>
+    <div class="photo-text">         👇          </div>
+  </div>
+
+  <div>
+    <button onclick="openEnvelope()">📩 Buka</button>
+    <button onclick="closeEnvelope()">📪 Tutup</button>
+  </div>
+
+  <div class="text-box" id="textBox">
+    PENCET COBA YANG BAWAH 💕
+  </div>
+
+  <button onclick="nextText()">💬 YANG INI NIHHH</button>
+</div>
+
+<script>
+const envelope = document.getElementById("envelope");
+const textBox = document.getElementById("textBox");
+
+const texts = [
+  "OIIIII BOCILLLLL🌸.",
+  "SENDOK NYAM NYAMMM🤏🏻.",
+  "SELEBBB",
+  "APA LAGI YAA LUPAAAA🤔.",
+  "JANGAN MARAH YAWWW KALO AKU LEDEKINN🥰.",
+  "MAAP YAWWWW🙏.",
+  "METTTT VALENTINEEE YAWWWW❤️",
+  "MOGA KAMU SUKA DEHHHH💕.",
+  "WLEEEEEE😝."
+];
+
+let i = 0;
+
+function openEnvelope() {
+  envelope.classList.add("open");
+  startHearts();
+}
+
+function closeEnvelope() {
+  envelope.classList.remove("open");
+  stopHearts();
+}
+
+function nextText() {
+  textBox.innerText = texts[i];
+  i++;
+  if (i >= texts.length) i = 0;
+}
+
+let heartInterval;
+
+function startHearts(){
+  const hearts = document.getElementById("hearts");
+
+  heartInterval = setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+
+    const emojis = ["💗","💖","💘","💝"];
+    heart.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    heart.style.fontSize = 16 + Math.random()*14 + "px";
+
+    hearts.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000);
+  }, 300);
+}
+
+function stopHearts(){
+  clearInterval(heartInterval);
+}
+</script>
+
+</body>
+</html>
